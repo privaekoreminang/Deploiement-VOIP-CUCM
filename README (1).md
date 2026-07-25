@@ -48,8 +48,7 @@ Ce projet de lab présente des limites par rapport à un environnement de produc
 
 ## Rapport complet
 
-📄 [Rapport technique complet (PDF)](docs/rapport-voip-cucm.pdf) — cadre théorique, architecture détaillée, configuration pas à pas, analyse des résultats.
-
+📄 [Rapport technique complet (PDF)](Rapport-VOIP-CUCM.pdf) — cadre théorique, architecture détaillée, configuration pas à pas, analyse des résultats.
 ## Auteurs
 
 Projet réalisé en groupe :
