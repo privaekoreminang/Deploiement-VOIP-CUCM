@@ -53,7 +53,5 @@ Ce projet de lab présente des limites par rapport à un environnement de produc
 
 Projet réalisé en groupe :
 - **Priva EKORE MINANG**
-- Michel Rickiel OBIANG ASSOUME
-- Yann Christopher OBAME MBA
-
-[LinkedIn](https://www.linkedin.com/in/) · [GitHub](https://github.com/privaekoreminang)
+  
+[LinkedIn](https://www.linkedin.com/in/priva-ekore-minang-023107420?utm_source=share_via&utm_content=profile&utm_medium=member_android) · [GitHub](https://github.com/privaekoreminang)
