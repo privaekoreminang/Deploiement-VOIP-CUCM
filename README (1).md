@@ -1,6 +1,6 @@
 # Déploiement d'une infrastructure VoIP en environnement virtualisé
 
-Projet académique réalisé à l'INPTIC (module VoIP/TOIP), en groupe de 3, sous la direction de M. MOUGHANGA OLANGANA. Déploiement complet d'une infrastructure de téléphonie sur IP professionnelle, avec analyse de sécurité et de qualité de service.
+. Déploiement complet d'une infrastructure de téléphonie sur IP professionnelle, avec analyse de sécurité et de qualité de service.
 
 ## Contexte
 
