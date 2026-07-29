@@ -1,6 +1,6 @@
-# ☎️ Déploiement VoIP/ToIP — Cisco Unified Communications Manager
+# ☎️ Déploiement VoIP/ToIP , Cisco Unified Communications Manager
 
-**Déploiement, sécurisation et supervision d'une infrastructure VoIP professionnelle en environnement virtualisé**, autour d'un serveur Cisco Unified Communications Manager (CUCM). Projet académique réalisé dans le cadre de la Licence Professionnelle Réseaux et Systèmes Numériques à l'INPTIC (Libreville, Gabon), sous la direction de M. MOUGHANGA OLANGANA.
+**Déploiement, sécurisation et supervision d'une infrastructure VoIP professionnelle en environnement virtualisé**, autour d'un serveur Cisco Unified Communications Manager (CUCM). 
 
 ![Cisco](https://img.shields.io/badge/Cisco-CUCM_14-1BA0D7?style=flat&logo=cisco&logoColor=white)
 ![SIP](https://img.shields.io/badge/Signalisation-SIP-0052CC?style=flat)
@@ -8,7 +8,6 @@
 ![Wireshark](https://img.shields.io/badge/Analyse-Wireshark-1679A7?style=flat&logo=wireshark&logoColor=white)
 ![QoS](https://img.shields.io/badge/QoS-LLQ_DSCP-orange?style=flat)
 
-> Projet réalisé en groupe de 3 : **EKORE MINANG Priva**, OBIANG ASSOUME Michel Rickiel, OBAME MBA Yann Christopher.
 
 📄 **[Rapport complet (PDF)](docs/rapport-voip-cucm.pdf)** — cadre théorique (VoIP, SIP, RTP/RTCP, QoS, sécurité), architecture détaillée, mise en œuvre pas à pas et bibliographie complète.
 
@@ -20,7 +19,7 @@ La convergence voix-données introduit des contraintes que la téléphonie class
 
 > Comment déployer, sécuriser et superviser une infrastructure VoIP professionnelle en environnement virtualisé, en garantissant la confidentialité des communications, la qualité de service et la détection des menaces réseau ?
 
-Six objectifs opérationnels structurent le projet : mise en place de l'architecture réseau, déploiement d'un serveur de téléphonie, implémentation d'une politique de Qualité de Service (QoS), chiffrement de bout en bout (SRTP/TLS), capture et analyse du trafic, et détection d'intrusion (IDS).
+Six objectifs opérationnels structurent le projet : mise en place de l'architecture réseau, déploiement d'un serveur de téléphonie, implémentation d'une politique de Qualité de Service (QoS), chiffrement de bout en bout (SRTP/TLS), capture et analyse du trafic et détection d'intrusion (IDS).
 
 ## 🖥️ Aperçu
 
@@ -49,12 +48,12 @@ Segmentation en trois VLANs, interconnectés par un routeur Cisco en **router-on
 | CUCM | Cisco UCM 14.0 | Serveur de téléphonie, Proxy SIP, Registrar |
 | Routeur | Cisco IOS c3725 | Routage inter-VLAN, QoS (LLQ) |
 | Switch | Cisco IOS c3750 | Commutation L2, port SPAN, dot1Q |
-| Softphones | CIPC 7.x | Clients SIP — extensions 2000 / 2010 |
+| Softphones | CIPC 7.x | Clients SIP : extensions 2000 / 2010 |
 | Machine d'analyse | Debian | Wireshark + Suricata |
 
 ## ⚙️ Mise en œuvre
 
-### 1. Réseau de base — VLANs, routage inter-VLAN, NAT, ACL
+### 1. Réseau de base : VLANs, routage inter-VLAN, NAT, ACL
 
 Le routeur assure le routage inter-VLAN via des sous-interfaces dot1Q, la traduction NAT et applique une ACL de filtrage restreignant le trafic DNS sortant par VLAN.
 
@@ -83,16 +82,16 @@ policy-map PM-QOS-VOIP
   set dscp default
 ```
 
-- Flux **RTP** → `priority 512` + DSCP **EF (46)** — priorité absolue
-- Signalisation **SIP** → `bandwidth 128` + DSCP **CS3 (24)** — priorité intermédiaire
+- Flux **RTP** → `priority 512` + DSCP **EF (46)** : priorité absolue
+- Signalisation **SIP** → `bandwidth 128` + DSCP **CS3 (24)** : priorité intermédiaire
 
 Validé par `show policy-map interface` pendant un appel actif : les paquets RTP sont bien classifiés dans la Priority Queue.
 
-### 3. Serveur de téléphonie — CUCM 14
+### 3. Serveur de téléphonie : CUCM 14
 
 - Services activés via Cisco Unified Serviceability : **Cisco CallManager**, **Cisco TFTP**, **Cisco SIP Proxy**
 - Deux Device Pools (`DP-VLAN20`, `DP-VLAN30`) associés à une région configurée en codec **G.711** (64 kbps)
-- Directory Numbers **2000** et **2010** attribués aux softphones — appels internes directs sans Route Pattern
+- Directory Numbers **2000** et **2010** attribués aux softphones : appels internes directs sans Route Pattern
 - Deux Phone Security Profiles : `CIPC-SIP-NonSecure` (port 5060) pour la phase initiale, `CIPC-SIP-Encrypted` (TLS port 5061, SRTP) pour la phase de chiffrement
 
 ### 4. Softphones CIPC
@@ -108,11 +107,11 @@ Machine Debian déployée sur le VLAN 10 (192.168.10.10), connectée au port SPA
 - **Enregistrement SIP** validé : les deux softphones apparaissent `Registered` dans la console CUCM
 - **Appels bidirectionnels** établis avec succès, transmission audio G.711 confirmée entre VLANs
 
-| Séquence SIP — enregistrement (REGISTER → 200 OK) | Séquence SIP — appel (INVITE → BYE) |
+| Séquence SIP : enregistrement (REGISTER → 200 OK) | Séquence SIP : appel (INVITE → BYE) |
 |---|---|
 | ![SIP register](voip-screenshots/wireshark-sip-register.png) | ![SIP appel](voip-screenshots/wireshark-sip-appel.png) |
 
-- Capture Wireshark confirmant que **la signalisation SIP transite intégralement en clair** (en-têtes, adresses IP des endpoints, corps SDP lisibles) — point de départ justifiant la nécessité du chiffrement TLS/SRTP
+- Capture Wireshark confirmant que **la signalisation SIP transite intégralement en clair** (en-têtes, adresses IP des endpoints, corps SDP lisibles), point de départ justifiant la nécessité du chiffrement TLS/SRTP
 - Flux RTP analysés via *Telephony → RTP Streams* : suivi des paquets transmis, pertes et gigue en temps réel, avec possibilité de réécoute via RTP Player
 - QoS validée : classification correcte des paquets RTP en Priority Queue avec marquage DSCP EF
 
@@ -135,7 +134,8 @@ RFC 3261 (SIP), RFC 4566 (SDP), RFC 3550 (RTP), RFC 2474 (DiffServ/DSCP), RFC 52
 ## 👤 Auteur
 
 **Priva EKORE MINANG**
-Étudiant en Licence Professionnelle Réseaux et Systèmes Numériques — INPTIC, Libreville
-Candidat SOC Analyst / Administrateur Réseaux (Cybastion — CCNA/CCST/CyberOps)
+Étudiant en Licence Professionnelle Réseaux et Systèmes Numériques à INPTIC, Libreville
+A la recherche d'un stage Académique de 3 mois 
+
 
 [LinkedIn](https://linkedin.com/in/priva-ekore-minang) · [GitHub](https://github.com/privaekoreminang)
