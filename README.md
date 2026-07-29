@@ -127,9 +127,6 @@ Machine Debian déployée sur le VLAN 10 (192.168.10.10), connectée au port SPA
 - Déploiement de **Suricata** (IDS/IPS) pour la détection d'attaques VoIP : scan SIP, flood SIP INVITE, enregistrements non autorisés
 - Stack cible : **CUCM 14 + SIP + QoS LLQ + SRTP/TLS + Suricata**, couvrant qualité de service, confidentialité et détection des menaces
 
-## 📚 Références
-
-RFC 3261 (SIP), RFC 4566 (SDP), RFC 3550 (RTP), RFC 2474 (DiffServ/DSCP), RFC 5246 (TLS 1.2), RFC 3711 (SRTP), recommandations ITU-T G.114, documentation Cisco QoS Design Guide, ENISA Threat Landscape for VoIP.
 
 ## 👤 Auteur
 
