@@ -9,7 +9,7 @@
 ![QoS](https://img.shields.io/badge/QoS-LLQ_DSCP-orange?style=flat)
 
 
-📄 **[Rapport complet (PDF)](docs/rapport-voip-cucm.pdf)** — cadre théorique (VoIP, SIP, RTP/RTCP, QoS, sécurité), architecture détaillée, mise en œuvre pas à pas et bibliographie complète.
+📄 **[Rapport complet (PDF)](docs/rapport-voip-cucm.pdf)** : cadre théorique (VoIP, SIP, RTP/RTCP, QoS, sécurité), architecture détaillée, mise en œuvre pas à pas et bibliographie complète.
 
 ---
 
